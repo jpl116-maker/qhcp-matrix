@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f3efe8;
+  --color-ink: #1a1714;
+  --color-muted: #6b645c;
+  --color-rule: #d4cdbf;
+  --color-forest: #2f4a3c;
+  --color-forest-soft: #e4ebe6;
+  --color-rust: #8c3a2f;
+  --color-rust-soft: #f6e8e5;
+  --color-surface: #fbf9f5;
+  --color-field: #efe8d6;
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4", ui-serif, Georgia, serif;
+  --radius-sm: 0.25rem;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: var(--font-sans);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+.app-toolbar {
+  isolation: isolate;
+  background-color: #fbf9f5;
+  background-image: linear-gradient(#fbf9f5, #fbf9f5);
+}
+
+.app-toolbar::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  top: -1px;
+  bottom: 0;
+  background-color: #fbf9f5;
+  background-image: linear-gradient(#fbf9f5, #fbf9f5);
+  pointer-events: none;
+}
+
+.print-report {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .matrix-grid {
+    grid-template-columns: 2.5rem minmax(18rem, 1fr) 7rem repeat(var(--cols), 10.5rem);
+    padding-right: 1rem;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .scorebar {
+    position: static !important;
+  }
+
+  .is-printing .screen-app {
+    display: none !important;
+  }
+
+  .is-printing .print-report {
+    display: block !important;
+    background: white;
+    color: black;
+    font-size: 10.5pt;
+    line-height: 1.4;
+  }
+
+  .is-printing .print-report h1 {
+    font-size: 18pt;
+    line-height: 1.2;
+  }
+
+  .is-printing .print-report h2 {
+    font-size: 14pt;
+    line-height: 1.25;
+  }
+
+  .is-printing .print-report table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 10.5pt;
+    line-height: 1.4;
+  }
+
+  .is-printing .print-report th,
+  .is-printing .print-report td {
+    overflow-wrap: break-word;
+    hyphens: auto;
+    vertical-align: top;
+  }
+
+  .is-printing .print-report thead {
+    display: table-header-group;
+  }
+
+  .is-printing .print-report a {
+    overflow-wrap: anywhere;
+  }
+
+  .is-printing .print-report .print-identity tr,
+  .is-printing .print-report .print-answers tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @page {
+    size: letter portrait;
+    margin: 0.55in;
+  }
+
+  @page answers-wide {
+    size: letter landscape;
+    margin: 0.5in;
+  }
+
+  .print-answers-wide {
+    page: answers-wide;
+  }
+}
